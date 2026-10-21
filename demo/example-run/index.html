@@ -1,0 +1,789 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script>document.documentElement.classList.add("js")</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aggie Dog Walking Society</title>
+<style>
+  :root {
+    --maroon: #500000;
+    --maroon-2: #732f2f;
+    --cream: #f7f1ea;
+    --sand: #e9dccb;
+    --ink: #241a17;
+    --muted: #6b5d57;
+    --white: #fff;
+    --radius: 18px;
+    --shadow: 0 10px 30px rgba(80, 0, 0, .12);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color: var(--ink);
+    background: var(--cream);
+  }
+  h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; line-height: 1.15; }
+  a { color: var(--maroon); }
+
+  .notice {
+    background: var(--ink); color: #f3e7dc;
+    text-align: center; font-size: .85rem; padding: .45rem 1rem;
+  }
+  .notice strong { color: #fff; }
+
+  header.site {
+    position: sticky; top: 0; z-index: 10;
+    background: var(--maroon); color: #fff;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, .2);
+  }
+  .bar {
+    max-width: 1120px; margin: 0 auto; padding: .6rem 1rem;
+    display: flex; align-items: center; gap: .75rem; flex-wrap: wrap;
+  }
+  .brand { display: flex; align-items: center; gap: .6rem; color: #fff; text-decoration: none; }
+  .brand svg { width: 46px; height: 46px; flex: none; }
+  .brand h1 { font-size: 1.15rem; margin: 0; }
+
+  nav.main { margin-left: auto; }
+  nav.main ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .2rem; }
+  nav.main a {
+    display: block; padding: .4rem .7rem; border-radius: 999px;
+    color: #fff; text-decoration: none; font-size: .92rem; font-weight: 600;
+    transition: background .2s;
+  }
+  nav.main a:hover, nav.main a:focus-visible { background: rgba(255, 255, 255, .16); }
+
+  section { scroll-margin-top: 90px; padding: 4.5rem 1rem; }
+  section:nth-of-type(even) { background: var(--white); }
+  .wrap { max-width: 1120px; margin: 0 auto; }
+  .eyebrow { text-transform: uppercase; letter-spacing: .14em; font-size: .78rem; font-weight: 700; color: var(--maroon-2); margin: 0 0 .4rem; }
+  section h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); margin: 0 0 1rem; color: var(--maroon); }
+  .lede { font-size: 1.12rem; color: var(--muted); max-width: 46rem; }
+
+  .grid { display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-top: 2rem; }
+  .card {
+    background: var(--white); border-radius: var(--radius); padding: 1.5rem;
+    box-shadow: var(--shadow); border-top: 5px solid var(--maroon);
+    transition: transform .25s, box-shadow .25s;
+  }
+  section:nth-of-type(even) .card { background: var(--cream); }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 16px 36px rgba(80, 0, 0, .18); }
+  .card h3 { margin: 0 0 .4rem; font-size: 1.3rem; }
+  .card .when { font-weight: 700; color: var(--maroon); margin: 0 0 .5rem; }
+  .card p { margin: 0 0 .5rem; }
+
+  .officers { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-top: 2rem; padding: 0; list-style: none; }
+  .officers li { background: var(--white); border-radius: 14px; padding: 1rem 1.2rem; box-shadow: var(--shadow); }
+  .officers b { display: block; color: var(--maroon); }
+  .officers span { color: var(--muted); font-size: .92rem; }
+
+  table.schedule { width: 100%; border-collapse: collapse; margin-top: 1.5rem; background: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+  .schedule th, .schedule td { text-align: left; padding: .9rem 1rem; border-bottom: 1px solid var(--sand); vertical-align: top; }
+  .schedule th { background: var(--maroon); color: #fff; font-weight: 600; }
+  .schedule tr:last-child td { border-bottom: 0; }
+
+  ol.steps { counter-reset: step; list-style: none; padding: 0; margin: 2rem 0 0; display: grid; gap: 1rem; }
+  ol.steps li { counter-increment: step; position: relative; padding: 1.1rem 1.2rem 1.1rem 4.2rem; background: var(--white); border-radius: 14px; box-shadow: var(--shadow); }
+  ol.steps li::before {
+    content: counter(step); position: absolute; left: 1.1rem; top: 1rem;
+    width: 2.2rem; height: 2.2rem; border-radius: 50%;
+    background: var(--maroon); color: #fff; font-weight: 700;
+    display: grid; place-items: center;
+  }
+  ol.steps b { display: block; }
+  .pack { display: flex; flex-wrap: wrap; gap: .5rem; padding: 0; list-style: none; margin: 1.5rem 0 0; }
+  .pack li { background: var(--sand); border-radius: 999px; padding: .35rem .9rem; font-size: .92rem; }
+
+  .split { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); align-items: start; }
+  dl.directions dt { font-weight: 700; color: var(--maroon); margin-top: 1rem; }
+  dl.directions dd { margin: .2rem 0 0; }
+
+  footer { background: var(--ink); color: #e9dccb; padding: 2.5rem 1rem; font-size: .9rem; }
+  footer a { color: #fff; }
+
+  .faq { max-width: 50rem; margin-top: 2rem; display: grid; gap: .75rem; }
+  .faq details { background: var(--cream); border-radius: 14px; padding: 0 1.25rem; border-left: 5px solid var(--maroon); }
+  .faq summary {
+    cursor: pointer; list-style: none; padding: 1rem 2rem 1rem 0; position: relative;
+    font-weight: 700; font-size: 1.05rem;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after {
+    content: "+"; position: absolute; right: 0; top: .75rem;
+    font-size: 1.5rem; color: var(--maroon); transition: transform .25s;
+  }
+  .faq details[open] summary::after { transform: rotate(45deg); }
+  .faq details p { margin: 0 0 1rem; color: var(--muted); }
+
+  .hero { background: var(--maroon); color: #fff; padding: 4rem 1rem 4.5rem; overflow: hidden; }
+  .hero .wrap { display: grid; gap: 2.5rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); align-items: center; }
+  .hero h2 { font-family: Georgia, "Times New Roman", serif; font-size: clamp(2.3rem, 6vw, 3.6rem); line-height: 1.05; margin: 0 0 1rem; }
+  .hero h2 em { color: #f4c9a8; font-style: italic; }
+  .hero p { font-size: 1.15rem; color: #f3e1d6; max-width: 32rem; }
+  .hero .eyebrow { color: #f4c9a8; }
+  .cta { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; }
+  .btn {
+    display: inline-block; padding: .8rem 1.4rem; border-radius: 999px; border: 2px solid transparent;
+    font: inherit; font-weight: 700; text-decoration: none; cursor: pointer;
+    transition: transform .15s, background .2s, box-shadow .2s;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn:focus-visible { outline: 3px solid #f4c9a8; outline-offset: 2px; }
+  .btn-light { background: #fff; color: var(--maroon); box-shadow: 0 6px 18px rgba(0, 0, 0, .25); }
+  .btn-ghost { border-color: rgba(255, 255, 255, .6); color: #fff; }
+  .btn-ghost:hover { background: rgba(255, 255, 255, .12); }
+  .scene { width: 100%; height: auto; display: block; }
+  .hero .scene { filter: drop-shadow(0 18px 30px rgba(0, 0, 0, .35)); animation: float 6s ease-in-out infinite; }
+  .card .scene { border-radius: 12px; margin: -.25rem 0 1rem; aspect-ratio: 16 / 9; }
+  .map { border-radius: var(--radius); box-shadow: var(--shadow); }
+  @keyframes float { 50% { transform: translateY(-8px); } }
+
+  .js .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+  .js .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .hero .scene { animation: none; }
+    .js .reveal { opacity: 1; transform: none; transition: none; }
+  }
+
+  #join { background: linear-gradient(160deg, var(--maroon), #2c0000); color: #fff; }
+  #join h2 { color: #fff; }
+  #join .lede { color: #f3e1d6; }
+  #join .eyebrow { color: #f4c9a8; }
+  .panel {
+    background: var(--white); color: var(--ink); border-radius: 24px; padding: clamp(1.25rem, 4vw, 2.5rem);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, .35); max-width: 760px; margin: 2rem auto 0;
+  }
+  .fields { display: grid; gap: 1.1rem 1.25rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+  .field { display: flex; flex-direction: column; gap: .3rem; min-width: 0; }
+  .field.full { grid-column: 1 / -1; }
+  .field label { font-weight: 700; font-size: .95rem; }
+  .hint { color: var(--muted); font-size: .85rem; margin: 0; }
+  input, select, textarea {
+    font: inherit; width: 100%; padding: .7rem .85rem; border-radius: 10px;
+    border: 2px solid var(--sand); background: #fffdfb; color: var(--ink);
+    transition: border-color .2s, box-shadow .2s;
+  }
+  textarea { min-height: 6rem; resize: vertical; }
+  input, select, textarea, #review, #welcome { scroll-margin-top: 140px; }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--maroon); box-shadow: 0 0 0 4px rgba(80, 0, 0, .12); }
+  fieldset { border: 0; padding: 0; margin: 1.75rem 0 0; min-width: 0; }
+  legend { font-family: Georgia, serif; font-size: 1.3rem; color: var(--maroon); font-weight: 700; padding: 0; margin-bottom: .75rem; }
+  .choices { display: grid; gap: .75rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+  .choice { position: relative; }
+  .choice input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; z-index: 1; }
+  .choice label {
+    display: flex; gap: .75rem; align-items: center; height: 100%;
+    padding: 1rem; border: 2px solid var(--sand); border-radius: 14px; cursor: pointer; font-weight: 600;
+    transition: border-color .2s, background .2s;
+  }
+  .choice .ico { width: 2.6rem; height: 1.7rem; flex: none; }
+  .choice input:checked + label { border-color: var(--maroon); background: #fbf1ec; }
+  .choice input:focus-visible + label { box-shadow: 0 0 0 4px rgba(80, 0, 0, .2); }
+  #dog-fields { animation: drop .3s ease; }
+  @keyframes drop { from { opacity: 0; transform: translateY(-8px); } }
+  .actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }
+  .btn-primary { background: var(--maroon); color: #fff; box-shadow: 0 8px 20px rgba(80, 0, 0, .3); }
+  .btn-primary:hover { background: #6a0d0d; }
+  .btn-outline { background: transparent; color: var(--maroon); border-color: var(--maroon); }
+  .btn:focus-visible { outline: 3px solid var(--maroon); }
+  .privacy { font-size: .85rem; color: var(--muted); margin-top: 1rem; }
+
+  @media (max-width: 640px) {
+    body { font-size: 16px; }
+    .bar { padding: .5rem 1rem; }
+    nav.main { margin: 0 -1rem; width: calc(100% + 2rem); overflow-x: auto; scrollbar-width: none; }
+    nav.main ul { flex-wrap: nowrap; padding: 0 .6rem; }
+    nav.main a { white-space: nowrap; }
+    section { padding: 3rem 1rem; scroll-margin-top: 110px; }
+    .schedule thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    .schedule tr { display: block; padding: .9rem 1rem; border-bottom: 1px solid var(--sand); }
+    .schedule td { display: block; padding: .1rem 0; border: 0; }
+    .schedule td:first-child { font-weight: 700; color: var(--maroon); }
+    ol.steps li { padding-left: 3.6rem; }
+    ol.steps li::before { left: .8rem; }
+  }
+
+  .error { color: #b42318; font-size: .88rem; font-weight: 600; margin: .1rem 0 0; }
+  .error::before { content: "⚠ "; }
+  [aria-invalid="true"] { border-color: #b42318; background: #fff6f5; }
+  .choice input[aria-invalid="true"] + label { border-color: #b42318; }
+  #review h3 { font-family: Georgia, serif; color: var(--maroon); font-size: 1.6rem; margin: 0 0 .5rem; }
+
+  dl.summary { display: grid; grid-template-columns: minmax(8rem, max-content) 1fr; gap: 0; margin: 1.25rem 0 0; border-radius: 14px; overflow: hidden; border: 1px solid var(--sand); }
+  dl.summary dt, dl.summary dd { margin: 0; padding: .7rem 1rem; border-bottom: 1px solid var(--sand); }
+  dl.summary dt { font-weight: 700; color: var(--maroon); background: #fbf6f1; }
+  dl.summary dd { overflow-wrap: anywhere; }
+  dl.summary .group { grid-column: 1 / -1; background: var(--maroon); color: #fff; font-family: Georgia, serif; font-weight: 700; }
+
+  #welcome { text-align: center; padding: 1rem 0; }
+  #welcome h3 { font-family: Georgia, serif; color: var(--maroon); font-size: clamp(1.6rem, 5vw, 2.2rem); margin: .5rem 0; }
+  #welcome .paw { width: 4rem; height: 4rem; animation: wag 1s ease-in-out 3; }
+  #welcome .actions { justify-content: center; }
+  @keyframes wag { 50% { transform: rotate(-15deg) scale(1.1); } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="dog" viewBox="0 0 100 60">
+      <path d="M24 30 Q8 24 12 8" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round">
+        <animateTransform attributeName="transform" type="rotate" values="0 24 30;-14 24 30;0 24 30" dur=".6s" repeatCount="indefinite"/>
+      </path>
+      <rect x="20" y="22" width="52" height="20" rx="10" fill="currentColor"/>
+      <rect x="24" y="36" width="7" height="20" rx="3.5" fill="currentColor"/>
+      <rect x="35" y="36" width="7" height="20" rx="3.5" fill="currentColor"/>
+      <rect x="55" y="36" width="7" height="20" rx="3.5" fill="currentColor"/>
+      <rect x="65" y="36" width="7" height="20" rx="3.5" fill="currentColor"/>
+      <circle cx="74" cy="18" r="12" fill="currentColor"/>
+      <ellipse cx="86" cy="21" rx="7" ry="5" fill="currentColor"/>
+      <ellipse cx="69" cy="15" rx="4.5" ry="9" fill="#000" opacity=".25" transform="rotate(15 69 15)"/>
+      <circle cx="78" cy="15" r="1.8" fill="#241a17"/>
+      <circle cx="92" cy="20" r="2" fill="#241a17"/>
+    </symbol>
+    <symbol id="walker" viewBox="0 0 40 100">
+      <circle cx="20" cy="12" r="9" fill="#e0b08a"/>
+      <path d="M11 9 Q20 -2 29 9 Z" fill="#500000"/>
+      <rect x="9" y="22" width="22" height="38" rx="9" fill="currentColor"/>
+      <rect x="11" y="56" width="7" height="40" rx="3.5" fill="#3a2d2a"/>
+      <rect x="22" y="56" width="7" height="40" rx="3.5" fill="#3a2d2a"/>
+    </symbol>
+  </defs>
+</svg>
+
+
+<div class="notice"><strong>Heads up:</strong> the Aggie Dog Walking Society is a fictional club made up for a class demo. It is not a real Texas A&amp;M organization.</div>
+
+<header class="site">
+  <div class="bar">
+    <a class="brand" href="#top">
+      <svg viewBox="0 0 64 64" role="img" aria-label="Aggie Dog Walking Society logo (placeholder)">
+        <title>Aggie Dog Walking Society logo (placeholder)</title>
+        <circle cx="32" cy="32" r="30" fill="#fff"/>
+        <circle cx="32" cy="32" r="26" fill="#500000"/>
+        <g fill="#fff">
+          <ellipse cx="32" cy="38" rx="9" ry="7.5"/>
+          <ellipse cx="21" cy="28" rx="3.6" ry="4.6"/>
+          <ellipse cx="27.5" cy="21.5" rx="3.6" ry="4.8"/>
+          <ellipse cx="36.5" cy="21.5" rx="3.6" ry="4.8"/>
+          <ellipse cx="43" cy="28" rx="3.6" ry="4.6"/>
+        </g>
+      </svg>
+      <h1>Aggie Dog Walking Society</h1>
+    </a>
+    <nav class="main" aria-label="Main">
+      <ul>
+        <li><a href="#who">Who we are</a></li>
+        <li><a href="#what">What we do</a></li>
+        <li><a href="#when">When &amp; where</a></li>
+        <li><a href="#first">Your first walk</a></li>
+        <li><a href="#find">Find us</a></li>
+        <li><a href="#faq">Common questions</a></li>
+        <li><a href="#join">Join</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<div class="hero">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Student org · College Station, TX</p>
+      <h2>Good dogs. Good walks. <em>Good Ags.</em></h2>
+      <p>Weekly group walks, shelter dog days, and monthly potlucks for every Aggie who loves dogs, whether or not you have one of your own.</p>
+      <div class="cta">
+        <a class="btn btn-light" href="#join">Join the pack</a>
+        <a class="btn btn-ghost" href="#first">What's a first walk like?</a>
+      </div>
+    </div>
+    <svg class="scene" viewBox="0 0 480 320" role="img" aria-label="Illustration: club members walking their dogs along a creek trail at sunrise">
+      <title>Club members walking their dogs along a creek trail at sunrise</title>
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbe3c6"/><stop offset="1" stop-color="#f3a77c"/></linearGradient>
+        <clipPath id="heroClip"><rect width="480" height="320" rx="28"/></clipPath>
+      </defs>
+      <g clip-path="url(#heroClip)">
+        <rect width="480" height="320" fill="url(#sky)"/>
+        <circle cx="350" cy="120" r="48" fill="#ffefc2"/>
+        <path d="M0 200 Q120 130 240 180 T480 160 V320 H0Z" fill="#c98a6a"/>
+        <path d="M0 230 Q140 180 280 220 T480 210 V320 H0Z" fill="#7d9a5a"/>
+        <path d="M0 320 C120 280 220 300 300 260 S440 240 480 250 V320Z" fill="#e9dccb"/>
+        <g fill="#56703d"><circle cx="60" cy="190" r="26"/><circle cx="92" cy="200" r="20"/><circle cx="420" cy="182" r="24"/></g>
+        <g fill="#5b3b2a"><rect x="57" y="205" width="6" height="25"/><rect x="417" y="196" width="6" height="22"/></g>
+        <path d="M140 70 l8 6 l8 -6 M170 55 l6 5 l6 -5" fill="none" stroke="#7a4b3a" stroke-width="2.5" stroke-linecap="round"/>
+        <use href="#walker" x="200" y="170" width="40" height="100" color="#2f4b6e"/>
+        <path d="M232 205 Q260 230 282 250" fill="none" stroke="#500000" stroke-width="2.5"/>
+        <use href="#dog" x="268" y="236" width="80" height="48" color="#c58b4f"/>
+        <use href="#walker" x="110" y="190" width="36" height="90" color="#500000"/>
+        <path d="M140 222 Q160 250 172 262" fill="none" stroke="#500000" stroke-width="2.5"/>
+        <use href="#dog" x="160" y="250" width="60" height="36" color="#3a2d2a"/>
+      </g>
+    </svg>
+  </div>
+</div>
+
+<section id="who">
+  <div class="wrap">
+    <p class="eyebrow">Howdy, and welcome</p>
+    <h2>Who we are</h2>
+    <p class="lede">The Aggie Dog Walking Society is a student org for anyone at A&amp;M who likes dogs, owns one or not. We started in 2019 when a handful of Corps and off-campus students kept running into each other on the same trail every Sunday morning, and decided it would be more fun to walk together.</p>
+    <p>Today we're about 140 members: undergrads, grad students, a few very patient roommates, and somewhere north of sixty dogs. We keep things low-key: show up when you can, bring your pup if you have one, and if you don't, the shelter dogs are always glad to see you.</p>
+    <ul class="officers">
+      <li><b>President</b> Maya Okafor '27<br><span>Runs meetings, owns a beagle named Waffles</span></li>
+      <li><b>Head Walk Captain</b> Luis Trevino '26<br><span>Plans routes and trains walk leaders</span></li>
+      <li><b>Shelter Liaison</b> Priya Raman '28<br><span>Coordinates our shelter walk days</span></li>
+      <li><b>Potluck Chair</b> Ben Whitaker '27<br><span>Keeps the queso coming</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="what">
+  <div class="wrap">
+    <p class="eyebrow">Three ways to show up</p>
+    <h2>What we do</h2>
+    <p class="lede">Most of what we do happens outside, on a leash, at a pace a dachshund can keep up with.</p>
+    <div class="grid">
+      <article class="card reveal">
+        <svg class="scene" viewBox="0 0 320 180" role="img" aria-label="Illustration: a pack of dogs trotting down a shady trail">
+          <title>A pack of dogs trotting down a shady trail</title>
+          <rect width="320" height="180" fill="#d8e6c4"/>
+          <path d="M0 120 Q160 90 320 120 V180 H0Z" fill="#a7c184"/>
+          <path d="M40 180 Q150 120 320 135 V160 Q170 150 90 180Z" fill="#efe4d3"/>
+          <g fill="#6f8f4e"><circle cx="40" cy="70" r="30"/><circle cx="270" cy="60" r="34"/><circle cx="300" cy="90" r="22"/></g>
+          <g fill="#5b3b2a"><rect x="37" y="95" width="6" height="30"/><rect x="267" y="90" width="6" height="35"/></g>
+          <use href="#dog" x="70" y="118" width="70" height="42" color="#c58b4f"/>
+          <use href="#dog" x="140" y="110" width="60" height="36" color="#f2efe9"/>
+          <use href="#dog" x="200" y="120" width="76" height="46" color="#3a2d2a"/>
+        </svg>
+        <h3>Weekly group walks</h3>
+        <p class="when">Every Sunday morning</p>
+        <p>A relaxed two-mile loop along the Wolf Pen Creek Trail. Walk leaders split the group into a chill pace and a brisk pace, and we finish back at the amphitheater for water bowls and belly rubs.</p>
+      </article>
+      <article class="card reveal">
+        <svg class="scene" viewBox="0 0 320 180" role="img" aria-label="Illustration: a shelter dog in a bandana waiting by the shelter door">
+          <title>A shelter dog in a bandana waiting by the shelter door</title>
+          <rect width="320" height="180" fill="#f6dccb"/>
+          <rect x="40" y="40" width="170" height="110" rx="6" fill="#fff"/>
+          <path d="M30 46 L125 10 L220 46Z" fill="#500000"/>
+          <rect x="105" y="85" width="40" height="65" rx="4" fill="#732f2f"/>
+          <rect x="58" y="70" width="32" height="28" rx="3" fill="#bcd4e6"/><rect x="160" y="70" width="32" height="28" rx="3" fill="#bcd4e6"/>
+          <path d="M260 46 c-10 -14 -30 -4 -20 12 l20 18 l20 -18 c10 -16 -10 -26 -20 -12z" fill="#d6455b"/>
+          <rect x="0" y="150" width="320" height="30" fill="#d9c3ad"/>
+          <use href="#dog" x="200" y="104" width="90" height="54" color="#9a6a45"/>
+          <path d="M268 118 l14 0 l-7 10z" fill="#500000"/>
+        </svg>
+        <h3>Shelter dog walks</h3>
+        <p class="when">First and third Saturdays</p>
+        <p>We carpool to the Brazos Paws Shelter (a fictional partner) and take adoptable dogs out for their best hour of the week. No dog of your own needed; shelter staff pair you with a dog that fits your experience.</p>
+      </article>
+      <article class="card reveal">
+        <svg class="scene" viewBox="0 0 320 180" role="img" aria-label="Illustration: a potluck table under a park pavilion with a hopeful dog nearby">
+          <title>A potluck table under a park pavilion with a hopeful dog nearby</title>
+          <rect width="320" height="180" fill="#2f3f5e"/>
+          <g fill="#ffe7a8"><circle cx="40" cy="30" r="2"/><circle cx="90" cy="18" r="1.5"/><circle cx="280" cy="25" r="2"/><circle cx="240" cy="12" r="1.5"/></g>
+          <path d="M40 60 L160 22 L280 60Z" fill="#500000"/>
+          <rect x="55" y="60" width="8" height="90" fill="#5b3b2a"/><rect x="257" y="60" width="8" height="90" fill="#5b3b2a"/>
+          <g fill="#ffd27a"><circle cx="100" cy="70" r="5"/><circle cx="160" cy="66" r="5"/><circle cx="220" cy="70" r="5"/></g>
+          <rect x="80" y="112" width="160" height="10" rx="3" fill="#c98a6a"/>
+          <rect x="90" y="122" width="8" height="28" fill="#9c5a46"/><rect x="222" y="122" width="8" height="28" fill="#9c5a46"/>
+          <ellipse cx="110" cy="108" rx="16" ry="6" fill="#f4a77a"/><ellipse cx="160" cy="106" rx="18" ry="8" fill="#fff"/><rect x="195" y="96" width="26" height="14" rx="3" fill="#e9c46a"/>
+          <rect x="0" y="150" width="320" height="30" fill="#4c6a3c"/>
+          <use href="#dog" x="230" y="122" width="60" height="36" color="#f2efe9"/>
+        </svg>
+        <h3>Member potlucks</h3>
+        <p class="when">Last Friday of the month</p>
+        <p>Dinner under the pavilion at Bee Creek Park. Bring a dish to share, or a bag of chips if it's finals week. Well-behaved dogs welcome; there's a separate snack table for them.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="when">
+  <div class="wrap">
+    <p class="eyebrow">Put it on your calendar</p>
+    <h2>When &amp; where</h2>
+    <p class="lede">All events are in College Station and happen rain or shine, unless it's lightning or over 100°F, in which case we post a cancellation in the group chat by 7 a.m.</p>
+    <table class="schedule reveal">
+      <thead><tr><th scope="col">What</th><th scope="col">When</th><th scope="col">Where we meet</th></tr></thead>
+      <tbody>
+        <tr><td>Weekly group walk</td><td>Sundays, 9:00 a.m.</td><td>Wolf Pen Creek Park amphitheater, College Station</td></tr>
+        <tr><td>Midweek campus stroll</td><td>Wednesdays, 6:30 p.m.</td><td>Research Park pond, west campus</td></tr>
+        <tr><td>Shelter dog walk</td><td>1st &amp; 3rd Saturdays, 10:00 a.m.</td><td>Carpool leaves the MSC bus loop at 9:30 a.m.</td></tr>
+        <tr><td>Member potluck</td><td>Last Friday of the month, 6:30 p.m.</td><td>Bee Creek Park pavilion</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="first">
+  <div class="wrap">
+    <p class="eyebrow">Never been? Start here</p>
+    <h2>Your first walk</h2>
+    <p class="lede">You don't need to sign up in advance or know anybody. Here's exactly what a first Sunday looks like.</p>
+    <ol class="steps reveal">
+      <li><b>8:50 a.m. — Find the maroon flag.</b> A walk leader with a maroon ADWS flag waits by the amphitheater stage. Tell them it's your first time and they'll introduce you around.</li>
+      <li><b>9:00 a.m. — Quick dog check-in.</b> If you brought a dog, the leader asks its name and how it does with other dogs, then gives you a colored bandana: green for social, yellow for "needs space."</li>
+      <li><b>9:10 a.m. — Pick a pace.</b> Chill group or brisk group, about two miles either way. No dog? Walk with whoever you like, and people will happily share leash time.</li>
+      <li><b>10:00 a.m. — Cool down.</b> Water bowls, treats, and a lot of dog photos. Plenty of folks head to breakfast together afterwards.</li>
+    </ol>
+    <p>What to bring and wear:</p>
+    <ul class="pack">
+      <li>Comfortable shoes</li><li>A water bottle</li><li>A 6-ft leash (no retractables)</li><li>Poop bags</li><li>Sunscreen and a hat</li><li>Proof of rabies vaccine for your dog</li>
+    </ul>
+  </div>
+</section>
+
+<section id="find">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow">Getting there</p>
+      <h2>Find us</h2>
+      <p class="lede">Sunday walks start at the Wolf Pen Creek Park amphitheater, off Dartmouth Street near Post Oak Mall in College Station.</p>
+      <dl class="directions">
+        <dt>Driving</dt><dd>Free parking in the lot next to the amphitheater. It fills by 9 on football weekends, so overflow parking is along Dartmouth.</dd>
+        <dt>Bus</dt><dd>Off-campus bus routes stop on Holleman Drive, about a five-minute walk to the park entrance.</dd>
+        <dt>Biking</dt><dd>Bike racks are by the amphitheater restrooms. The creek trail connects to the Holleman bike lanes.</dd>
+        <dt>Can't find us?</dt><dd>Look for the maroon flag and the cluster of very happy dogs on the lawn below the stage.</dd>
+      </dl>
+    </div>
+    <svg class="scene map" viewBox="0 0 400 300" role="img" aria-label="Map sketch: Wolf Pen Creek Park amphitheater between Holleman Drive and Dartmouth Street, with parking and the bus stop marked">
+      <title>Map sketch of the Sunday meeting spot at Wolf Pen Creek Park</title>
+      <rect width="400" height="300" fill="#eef0e4"/>
+      <path d="M0 180 C80 150 140 220 220 190 S340 140 400 170" fill="none" stroke="#9cc3da" stroke-width="14" stroke-linecap="round"/>
+      <path d="M0 186 C80 156 140 226 220 196 S340 146 400 176" fill="none" stroke="#e9dccb" stroke-width="3" stroke-dasharray="6 6"/>
+      <rect x="0" y="40" width="400" height="22" fill="#fff"/><text x="12" y="56" font-size="13" font-family="system-ui" fill="#6b5d57">Holleman Dr.</text>
+      <rect x="300" y="0" width="22" height="300" fill="#fff"/><text x="315" y="290" font-size="13" font-family="system-ui" fill="#6b5d57" transform="rotate(-90 315 290)">Dartmouth St.</text>
+      <rect x="215" y="215" width="70" height="40" rx="4" fill="#d6d2c4"/><text x="250" y="240" text-anchor="middle" font-size="16" font-weight="700" font-family="system-ui" fill="#3a2d2a">P</text>
+      <rect x="60" y="66" width="34" height="18" rx="3" fill="#2f4b6e"/><text x="77" y="79" text-anchor="middle" font-size="11" font-family="system-ui" fill="#fff">BUS</text>
+      <path d="M77 84 C90 130 150 120 180 140" fill="none" stroke="#500000" stroke-width="2.5" stroke-dasharray="4 5"/>
+      <path d="M180 116 c-14 0 -22 10 -22 20 c0 14 22 34 22 34 s22 -20 22 -34 c0 -10 -8 -20 -22 -20z" fill="#500000"/>
+      <circle cx="180" cy="136" r="7" fill="#fff"/>
+      <text x="180" y="105" text-anchor="middle" font-size="13" font-weight="700" font-family="system-ui" fill="#500000">Amphitheater · meet here</text>
+    </svg>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <p class="eyebrow">Before you ask</p>
+    <h2>Common questions</h2>
+    <p class="lede">The handful of things almost every new member wants to know. Still curious? Ask any walk leader on Sunday; they've heard every question at least twice.</p>
+    <div class="faq">
+      <details>
+        <summary>Do I need a dog to join?</summary>
+        <p>Not at all. About a third of our members don't have a dog. Come to the shelter walks, borrow leash time from a friend on Sundays, or just come for the potlucks. You're a full member either way.</p>
+      </details>
+      <details>
+        <summary>Does it cost anything?</summary>
+        <p>No dues. Potlucks are bring-a-dish, and the shelter carpool is free. We occasionally sell club bandanas and T-shirts, but nobody is ever required to buy one.</p>
+      </details>
+      <details>
+        <summary>My dog is reactive or shy. Can we still come?</summary>
+        <p>Yes. Tell us in the signup form and on the day. Yellow-bandana dogs walk at the back of the group with extra space, and a walk leader checks in with you before we start. If your dog needs a quieter start, the Wednesday stroll is smaller.</p>
+      </details>
+      <details>
+        <summary>What vaccines does my dog need?</summary>
+        <p>Current rabies and DHPP, the same as most Texas dog parks. Keep a photo of the rabies certificate on your phone; walk leaders may ask the first time you come.</p>
+      </details>
+      <details>
+        <summary>Can I bring a puppy?</summary>
+        <p>Puppies are welcome once they've finished their full vaccine series, usually around four months. Shorter legs are fine: the chill-pace group is happy to stop for every interesting smell.</p>
+      </details>
+      <details>
+        <summary>What happens if the weather is bad?</summary>
+        <p>We walk in light rain. Lightning, ice, or a heat index over 100°F cancels the walk, and we post that in the group chat by 7 a.m. on the day.</p>
+      </details>
+      <details>
+        <summary>I'm a grad student. Am I welcome?</summary>
+        <p>Absolutely. Any current A&amp;M student can join: undergrads, grad students, and professional students alike.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section id="join">
+  <div class="wrap">
+    <p class="eyebrow">Membership is free</p>
+    <h2>Join the pack</h2>
+    <p class="lede">Takes about two minutes. Tell us a little about you and, if you have one, your dog, so walk leaders know who's coming. Dogless members welcome.</p>
+
+    <div class="panel">
+      <form id="signup" novalidate>
+        <div class="fields">
+          <div class="field full">
+            <label for="f-name">Your name</label>
+            <input id="f-name" name="name" autocomplete="name" maxlength="80" required>
+          </div>
+          <div class="field">
+            <label for="f-email">A&amp;M email</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" maxlength="120" required aria-describedby="h-email">
+            <p class="hint" id="h-email">Your @tamu.edu address.</p>
+          </div>
+          <div class="field">
+            <label for="f-year">Class year</label>
+            <select id="f-year" name="classYear" required>
+              <option value="">Choose one…</option>
+              <option>Freshman</option>
+              <option>Sophomore</option>
+              <option>Junior</option>
+              <option>Senior</option>
+              <option>Graduate student</option>
+            </select>
+          </div>
+        </div>
+
+        <fieldset id="has-dog">
+          <legend>Are you bringing a dog?</legend>
+          <div class="choices">
+            <div class="choice">
+              <input type="radio" id="f-dog-yes" name="hasDog" value="yes" required>
+              <label for="f-dog-yes"><svg class="ico" viewBox="0 0 100 60" aria-hidden="true"><use href="#dog" color="#c58b4f"/></svg> I have a dog</label>
+            </div>
+            <div class="choice">
+              <input type="radio" id="f-dog-no" name="hasDog" value="no">
+              <label for="f-dog-no"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="#d6455b" d="M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11z"/></svg> No dog, I'll come for shelter walks</label>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset id="dog-fields" hidden>
+          <legend>About your dog</legend>
+          <div class="fields">
+            <div class="field">
+              <label for="f-dog-name">Dog's name</label>
+              <input id="f-dog-name" name="dogName" maxlength="60" required>
+            </div>
+            <div class="field">
+              <label for="f-dog-breed">Breed</label>
+              <input id="f-dog-breed" name="dogBreed" maxlength="80" placeholder="Mixed is fine!" required>
+            </div>
+            <div class="field">
+              <label for="f-dog-sex">Sex</label>
+              <select id="f-dog-sex" name="dogSex" required>
+                <option value="">Choose…</option>
+                <option>Female</option>
+                <option>Male</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="f-dog-age">Age (years)</label>
+              <input id="f-dog-age" name="dogAge" type="number" inputmode="numeric" min="0" max="25" step="1" required>
+            </div>
+            <div class="field">
+              <label for="f-dog-size">Size</label>
+              <select id="f-dog-size" name="dogSize" required>
+                <option value="">Choose…</option>
+                <option>Small (under 25 lb)</option>
+                <option>Medium (25–50 lb)</option>
+                <option>Large (50–90 lb)</option>
+                <option>Extra large (90+ lb)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="f-dog-social">Good with other dogs?</label>
+              <select id="f-dog-social" name="dogGoodWithDogs" required>
+                <option value="">Choose…</option>
+                <option>Yes</option>
+                <option>Sometimes, needs space</option>
+                <option>No</option>
+                <option>Not sure yet</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="f-dog-notes">Anything a walk leader should know?</label>
+              <textarea id="f-dog-notes" name="dogNotes" maxlength="500" placeholder="Pulls on the leash, scared of bikes, loves everyone…"></textarea>
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="actions">
+          <button class="btn btn-primary" type="submit">Review my info</button>
+        </div>
+        <p class="privacy">We only ask what walk leaders need. This demo keeps your signup in this browser; nothing is sent anywhere.</p>
+      </form>
+
+      <div id="review" hidden tabindex="-1">
+        <h3>Review your info</h3>
+        <p class="hint">Check everything below. Spot a typo? Hit Edit and fix it before you join.</p>
+        <dl class="summary" id="summary"></dl>
+        <div class="actions">
+          <button class="btn btn-outline" type="button" id="edit">Edit</button>
+          <button class="btn btn-primary" type="button" id="confirm">Confirm &amp; join</button>
+        </div>
+        <p role="alert" class="error" id="save-error" hidden>We couldn't save your signup in this browser (storage may be blocked or full). Nothing was lost; please try again.</p>
+      </div>
+
+      <div id="welcome" hidden tabindex="-1">
+        <svg class="paw" viewBox="0 0 64 64" aria-hidden="true"><g fill="#500000"><ellipse cx="32" cy="40" rx="11" ry="9"/><ellipse cx="18" cy="28" rx="4.5" ry="5.5"/><ellipse cx="26" cy="19" rx="4.5" ry="6"/><ellipse cx="38" cy="19" rx="4.5" ry="6"/><ellipse cx="46" cy="28" rx="4.5" ry="5.5"/></g></svg>
+        <h3 id="welcome-title"></h3>
+        <p id="welcome-next"></p>
+        <div class="actions">
+          <button class="btn btn-outline" type="button" id="again">Sign up someone else</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><b>Aggie Dog Walking Society</b> · College Station, Texas</p>
+    <p>This is a fictional club created for a class demo. It is not affiliated with or endorsed by Texas A&amp;M University, and the people, partner shelter and events above are made up.</p>
+  </div>
+</footer>
+
+<script>
+  // Fade sections' cards in as they scroll into view.
+  const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+    if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+  }), { threshold: .15 });
+  document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+  // Smooth-scroll only for in-page links, so focus jumps and form errors stay instant.
+  const calm = matchMedia("(prefers-reduced-motion: reduce)");
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest('a[href^="#"]');
+    const target = a && document.querySelector(a.getAttribute("href"));
+    if (!target) return;
+    e.preventDefault();
+    target.scrollIntoView({ behavior: calm.matches ? "auto" : "smooth" });
+    history.replaceState(null, "", a.getAttribute("href"));
+  });
+
+  const form = document.getElementById("signup");
+  const dogFields = document.getElementById("dog-fields");
+  form.addEventListener("change", (e) => {
+    if (e.target.name === "hasDog") dogFields.hidden = e.target.value !== "yes";
+  });
+
+  // Validation: one rule per field; dog rules only apply when "I have a dog" is picked.
+  const required = (msg) => (v) => (v ? "" : msg);
+  const rules = {
+    name: required("Please enter your name."),
+    email: (v) => !v ? "Please enter your A&M email."
+      : /^[^\s@]+@(email\.)?tamu\.edu$/i.test(v) ? "" : "Use your A&M address, ending in @tamu.edu.",
+    classYear: required("Choose your class year."),
+    hasDog: required("Let us know whether you're bringing a dog."),
+    dogName: required("What's your dog's name?"),
+    dogBreed: required("Enter a breed. \"Mixed\" is fine."),
+    dogSex: required("Choose your dog's sex."),
+    dogAge: (v) => /^\d+$/.test(v) && +v <= 25 ? "" : "Enter your dog's age in whole years, 0 to 25.",
+    dogSize: required("Choose a size."),
+    dogGoodWithDogs: required("Let walk leaders know how your dog does with other dogs."),
+  };
+  const value = (name) => (form.elements[name].value || "").trim();
+  const controls = (name) => {
+    const c = form.elements[name];
+    return c instanceof RadioNodeList ? [...c] : [c];
+  };
+
+  for (const name in rules) {
+    const els = controls(name);
+    const err = document.createElement("p");
+    err.className = "error";
+    err.id = `err-${name}`;
+    err.hidden = true;
+    (els.length > 1 ? els[0].closest("fieldset") : els[0].closest(".field")).append(err);
+    for (const el of els) el.setAttribute("aria-describedby", `${el.getAttribute("aria-describedby") || ""} ${err.id}`.trim());
+  }
+
+  function check(name) {
+    const skip = name.startsWith("dog") && value("hasDog") !== "yes";
+    const msg = skip ? "" : rules[name](value(name));
+    const err = document.getElementById(`err-${name}`);
+    err.textContent = msg;
+    err.hidden = !msg;
+    for (const el of controls(name)) msg ? el.setAttribute("aria-invalid", "true") : el.removeAttribute("aria-invalid");
+    return !msg;
+  }
+
+  // Once a field has been flagged, re-check it as the person fixes it.
+  form.addEventListener("input", (e) => e.target.getAttribute("aria-invalid") && check(e.target.name));
+  // Choices check on change; text fields wait for submit, so an error appearing on blur can't shift the layout mid-click.
+  form.addEventListener("change", (e) => /radio|select/.test(e.target.type) && check(e.target.name));
+
+  const review = document.getElementById("review");
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const bad = Object.keys(rules).filter((name) => !check(name));
+    if (bad.length) return controls(bad[0])[0].focus();
+    showReview(readForm());
+  });
+
+  function readForm() {
+    const dog = value("hasDog") === "yes" ? {
+      name: value("dogName"), breed: value("dogBreed"), sex: value("dogSex"), age: Number(value("dogAge")),
+      size: value("dogSize"), goodWithDogs: value("dogGoodWithDogs"), notes: value("dogNotes"),
+    } : null;
+    return { name: value("name"), email: value("email"), classYear: value("classYear"), dog };
+  }
+
+  function showReview(m) {
+    const rows = [["Name", m.name], ["A&M email", m.email], ["Class year", m.classYear]];
+    if (m.dog) rows.push(["", "Your dog"], ["Dog's name", m.dog.name], ["Breed", m.dog.breed], ["Sex", m.dog.sex],
+      ["Age", `${m.dog.age} ${m.dog.age === 1 ? "year" : "years"}`], ["Size", m.dog.size],
+      ["Good with other dogs?", m.dog.goodWithDogs], ["Notes for walk leaders", m.dog.notes || "None"]);
+    else rows.push(["Dog", "No dog, coming for shelter walks"]);
+
+    const summary = document.getElementById("summary");
+    summary.replaceChildren(...rows.flatMap(([k, v]) => {
+      const dd = document.createElement("dd");
+      dd.textContent = v;
+      if (!k) return [Object.assign(dd, { className: "group" })];
+      const dt = document.createElement("dt");
+      dt.textContent = k;
+      return [dt, dd];
+    }));
+    form.hidden = true;
+    review.hidden = false;
+    review.focus();
+  }
+
+  // ponytail: localStorage stand-in until the real backend exists; swap saveMember for a POST then.
+  const KEY = "adws.members";
+  function saveMember(member) {
+    const members = JSON.parse(localStorage.getItem(KEY) || "[]");
+    members.push(member);
+    localStorage.setItem(KEY, JSON.stringify(members));
+  }
+
+  const welcome = document.getElementById("welcome");
+  document.getElementById("confirm").addEventListener("click", () => {
+    const member = { ...readForm(), joinedAt: new Date().toISOString() };
+    try {
+      saveMember(member);
+    } catch {
+      document.getElementById("save-error").hidden = false;
+      return;
+    }
+    document.getElementById("welcome-title").textContent = `Welcome to the pack, ${member.name}!`;
+    document.getElementById("welcome-next").textContent = member.dog
+      ? `We can't wait to meet ${member.dog.name}. See you both Sunday at 9:00 a.m. at the Wolf Pen Creek amphitheater; look for the maroon flag.`
+      : "Your first shelter walk is the next 1st or 3rd Saturday. The carpool leaves the MSC bus loop at 9:30 a.m.";
+    document.getElementById("save-error").hidden = true;
+    review.hidden = true;
+    welcome.hidden = false;
+    welcome.focus();
+  });
+
+  document.getElementById("again").addEventListener("click", () => {
+    form.reset();
+    dogFields.hidden = true;
+    welcome.hidden = true;
+    form.hidden = false;
+    form.elements.name.focus();
+  });
+
+  document.getElementById("edit").addEventListener("click", () => {
+    review.hidden = true;
+    form.hidden = false;
+    form.elements.name.focus();
+  });
+</script>
+</body>
+</html>

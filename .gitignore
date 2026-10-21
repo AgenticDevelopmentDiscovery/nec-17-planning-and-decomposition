@@ -16,6 +16,14 @@ _site/
 *.fls
 *.fdb_latexmk
 
+# Demo tooling: Playwright is installed locally to inspect the two live runs.
+# The scripts, prompts, brief and starter in demo/ are tracked; dependencies,
+# generated reports and screenshots are not. The run folders themselves live
+# outside this repository (see demo/README.md).
+demo/tools/node_modules/
+demo/tools/package-lock.json
+demo/output/
+
 # Editor and OS noise.
 .DS_Store
 *.swp
@@ -26,3 +34,6 @@ _site/
 # Local Claude Code settings. `.claude/skills/` IS tracked — the /round verb is
 # part of the template and every team member needs it.
 .claude/settings.local.json
+
+# The live demo working folder. Rebuilt by demo/tools/setup.sh; never committed.
+demo/run/

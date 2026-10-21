@@ -31,34 +31,29 @@ One Markdown source in `sections/` becomes three artifacts:
 | Output | Built by | What it is |
 | --- | --- | --- |
 | **Document** | `just doc` | `output/document.pdf` — the long-form read |
-| **Presentation** | `just slides` | `output/slides.pdf` — one slide per `##` heading |
-| **Website** | `just site` | `_site/` — one page, sidebar contents, both PDFs linked |
+| **Website** | `just site` | `_site/` — one page, sidebar contents, the PDF linked |
 
-`just build` makes all three. `just serve` previews the site at `localhost:8000`.
+`just build` makes both. `just serve` previews the site at `localhost:8000`.
 `just deploy` publishes to GitHub Pages.
+
+**The presentation is no longer a pandoc output.** It is authored by hand from
+`presentation/source/POWERPOINT-BRIEF.md`. See the House conventions section below.
 
 There is no generator and no engine. The section order is a **shell glob** over
 `sections/*.prose.md`, so the numeric prefixes on the filenames are the document
 order. Add a section by adding a numbered pair — nothing needs registering.
 
-### The slide constraint is a writing constraint
+### The `##` unit is still a writing constraint
 
-Slides are made at `--slide-level=2`: **every `##` heading becomes one slide, and
-what sits under it must fit.**
+The deck no longer renders from `sections/`, but the discipline it enforced is
+worth keeping: a `##` unit should carry **one idea**, stated in what fits a
+reader's attention. A unit that sprawls is usually two units, or padding.
 
-Treat overflow as a finding about the prose, not a formatting nuisance. A `##`
-unit that will not fit a slide is almost always carrying more than one idea, or
-padded. Split it or cut it. Shrinking the font hides the signal.
-
-Nothing in the build checks this for you — pandoc hides the TeX log unless the
-render fails, so an overfull frame is silent. That is deliberate. Overflow is a
-judgement about whether a slide reads, not a threshold to pass: look at the deck,
-or ask the agent to look at it with you. The `visual` reviewer names the `##`
-units it believes are carrying too much, and you confirm against the page.
-
-This is the whole reason the presentation shares a source with the document
-rather than being written separately: it is a standing check on whether the prose
-has kept its shape.
+The deck and the document are now two deliberate registers. The document is the
+long-form read; the deck is seven designed slides for a five-minute slot, and
+forcing one slide per heading produced sixteen near-identical text slides. The
+`visual` reviewer therefore judges `presentation/source/POWERPOINT-BRIEF.md` against the
+prose, rather than counting overfull frames.
 
 ## The artifact: a section is a pair
 
@@ -218,6 +213,16 @@ hole.
 > sections that are off limits, a collaborator's preferences, deliberate
 > departures from the guardrails above and why.
 
+- **The presentation is authored, not generated.** `presentation/source/POWERPOINT-BRIEF.md`
+  is the deck's source of truth: slide copy, figure specs, presenter script, alt
+  text and timings, for seven slides in a five-minute slot. `just slides` and
+  `output/slides.pdf` no longer exist. Edit the brief, not a build recipe.
+- **The demo is one live Claude Code session.** `demo/harness/CLAUDE.md` is the
+  whole harness: it says plan first, stop for review, then work one unit at a
+  time proving each with a check. `demo/run/` is the live folder and starts with
+  that file and nothing else — the session writes the plan, the checks and the
+  page. `demo/example-run/` keeps a completed run as the worked example. Report
+  the live outcome as observed.
 - **The `scaffold:*` skills do not apply to this project.** `md2tex`, `tex2md`
   and `progression` operate on a LaTeX layout — `sections/<name>.tex`, `main.tex`,
   a `PROGRESSION.md` — that does not exist here. Their vocabulary overlaps this

@@ -1,47 +1,80 @@
 # Content
 
-<!-- Every `##` becomes one slide. One idea each.
-     This is the main portion of the tutorial and the section most likely to
-     need more `##` units than the four below. Add them freely — each new
-     heading is a new slide, and splitting is how you find the joints. -->
+## The test: name the check
 
-## How it works
+Before handing over a unit, answer one question.
 
-> The mental model, before any procedure. What are the moving parts and how do
-> they relate? A reader who has this can predict what the tool will do in a case
-> you never showed them; one who has only the steps cannot.
->
-> This is the unit most likely to need a figure — the boxes, the arrows, the one
-> relationship the prose leaves abstract. See `figures/README.md`.
+> What would I run, or look at, to see that this worked?
 
-Replace this paragraph.
+- You can answer it → the unit is ready.
+- Your answer is "I'd look at the thing and tell" → not a unit yet. Too vague to
+  hand over, and too vague to verify when it comes back.
+- You need five different checks → that is five units wearing one name.
 
-## Using it: the basic case
+## Three properties, one per failure family
 
-> The first walkthrough, concrete enough to follow along. Show the actual
-> commands, code, or configuration — not a description of them.
->
-> Pick the smallest case that is still real. A toy that could not occur in
-> practice teaches the toy; a realistic case teaches the tool.
+| Property | Means | Answers |
+| --- | --- | --- |
+| **Edges** | what is in, and what is not | boundary |
+| **A check** | the unit carries its own proof | completion |
+| **Written down** | lives in a file, worked one at a time | continuity |
 
-Replace this paragraph.
+A unit with all three is not merely smaller. It is handed over with the three
+things the agent would otherwise have had to invent.
 
-## Using it: going further
+## Plan mode moves the work, it does not remove it
 
-> The second case, one step harder, chosen to expose something the first one
-> hid. Say what is new here and why the basic case could not show it.
->
-> Split this into several `##` units if it does not fit one slide. That split is
-> a feature: it forces you to find the joints in your own explanation.
+Most of us hand the front-loading to the model now: plan mode produces a
+decomposition before anything gets edited.
 
-Replace this paragraph.
+What it is good at: surfacing files, steps, and consequences you had not
+considered.
 
-## Pitfalls
+What it cannot do is supply a vision you never gave it. A vague goal yields a
+plan that *reads* as rigorous and is confidently wrong — which is worse than no
+plan, because it launders a vague ask into something with the shape of a
+decomposition.
 
-> The mistakes people actually make, and what each one looks like when it
-> happens. Lead with the symptom the reader will see, then the cause.
->
-> Prefer the errors you have made yourself. Invented pitfalls are obvious to a
-> reader who has made the real ones.
+A generated plan is a proposal to review. Reviewing one well means knowing what a
+good unit looks like, which is the skill on the previous slide — relocated, not
+replaced.
 
-Replace this paragraph.
+## Worked example: a club page, decomposed
+
+A request for a student club homepage and signup form, handed to a session whose
+harness says: plan first, then stop.
+
+**What came back.** Ten units, each with a check named before anything was
+built. Eleven open questions — which addresses count as a university email, what
+"one dog per member" means, where the fictional-club notice goes. Seven things
+ruled out of scope and binding once written.
+
+**What each unit looked like.**
+
+> U7 — Validation refuses to advance while required fields are empty.
+> *Check: `node checks/u7.mjs`.*
+
+The check drives the page in a browser and asserts what a person would see. It
+is not a search for a word in the source: "the file contains the word review" is
+not evidence that a review step works.
+
+**The one requirement that had no check**, in the session's own words:
+
+> "Polished, with some life to it." No check can judge taste — that part is your
+> eye at review, not a unit.
+
+That is the honest boundary of the method. A check is evidence about the thing
+it checks, and about nothing else.
+
+## What it costs
+
+Decomposition is front-loaded work. You pay it before anything visibly happens,
+which is exactly when it feels least worth paying.
+
+It is not always worth it. Skip it for throwaway scripts, for exploration, for
+anything you would rather restart than resume, and for one-shot tasks that finish
+in less time than the planning takes.
+
+It earns its keep when the work outlives a single session, when somebody other
+than you has to believe it works, or when being wrong is expensive to discover
+late.

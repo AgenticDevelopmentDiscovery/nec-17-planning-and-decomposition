@@ -1,35 +1,29 @@
 # Motivation
 
-<!-- Every `##` becomes one slide. One idea each. -->
+## Three families of failure
 
-## Why it matters for agentic development
+**Boundary** — it did the wrong *amount* of work.
 
-> The case, made concretely. What does this tool, technique, or notion let an
-> agentic system do that is hard or impossible without it?
->
-> Tie it to agentic development specifically — not to software in general. If the
-> answer would read the same for any programming topic, you have not made the
-> case yet.
+- Touched a dozen files you never mentioned
+- Started three things and finished none of them
 
-Replace this paragraph.
+**Completion** — it does not know when it is *done*.
 
-## What goes wrong without it
+- "Done!" with nothing run
+- Patched the failing assertion instead of the bug
 
-> The failure it prevents, shown rather than asserted. A concrete situation that
-> goes badly, and how it goes badly.
->
-> This is the paragraph that makes the tutorial worth reading. A reader who has
-> felt the failure will follow you through the mechanics; one who has not will
-> skim. Use a real case if you have one.
+**Continuity** — it lost the *thread*.
 
-Replace this paragraph.
+- Context filled; the next session redid finished work
+- Built something that was never what you meant, discovered at the end
 
-## When to reach for it
+## Why a better model does not fix them
 
-> The bounds, stated by you rather than discovered by a frustrated reader. What
-> it is good for, and — just as important — when it is the wrong tool.
->
-> A technique with honestly stated limits is more usable than one presented as
-> universal, because the reader can tell whether their situation is in scope.
+Every one of these is the agent supplying something you left out.
 
-Replace this paragraph.
+- No edges, so it chose its own.
+- No definition of done, so it used its own — which is *the code looks finished*.
+- No written record, so it reconstructed from context, and context ran out.
+
+A stronger model does all three faster, and more convincingly. Capability is not
+the missing input here. Specification is.

@@ -1,87 +1,113 @@
 # Topic
 
-<!-- THE PROPOSAL. Never rendered into the document, the slides, or the site —
-     but every reviewer reads it, and the panel judges the tutorial against what
-     you promise here. Write it before you write a section.
-
-     This is the document-level counterpart to a section's `.concepts.md`: the
-     same job of holding intent separately from what ships, one level up.
-
-     Keep it short. A page is plenty. Delete these comments and the guidance
-     blockquotes as you fill it in. -->
-
 ## In one sentence
 
-> The topic, named and bounded, in a single sentence a stranger could repeat
-> back. If it takes two, the topic is probably two topics.
-
-Replace this line.
+Planning and task decomposition is the practice of breaking a goal into units of
+work an agent can finish and you can check, so that "done" is something a command
+proves rather than something the agent asserts.
 
 ## What it is
 
-> A paragraph of plain description. What is the tool, technique, or notion —
-> defined by what it does, not by what it is built from or why it is good.
->
-> This seeds `01-context`. If you cannot write it without arguing for the topic,
-> the argument is doing work the definition should be doing.
+Task decomposition is the step between having a capable agent and getting useful
+work out of it. You take a goal stated the way a person would state it — "add
+authentication," "clean up the data pipeline" — and rewrite it as an ordered set
+of smaller units, each one carrying a description of the behavior it delivers and
+a specific way to confirm that behavior exists. The units are worked one at a
+time. A unit is finished when its check passes, not when the agent reports that it
+is finished.
 
-Replace this paragraph.
+The decisive property is not size. It is checkability. Cutting a task into five
+vague pieces produces five vague pieces. A unit is decomposed correctly when you
+can name the command, test, or observation that would tell you it works — and that
+constraint is what forces the pieces to be small, specific, and independent, as a
+consequence rather than as a goal.
 
 ## Why it belongs in this course
 
-> The case for spending a reader's time on it: what it lets an agentic system do
-> that is hard or impossible otherwise, and what goes wrong without it.
->
-> This seeds `02-motivation`. Be specific to agentic development — if the reason
-> would read the same for any programming topic, keep going.
+The three tutorials before this one built up a capable agent: the ReAct loop gave
+it a way to reason and act in turns, the hardware discussion gave it somewhere to
+run, and MCP gave it tools to reach real systems. Each of those raises what the
+agent *can* do.
 
-Replace this paragraph.
+This topic is about the first problem in that sequence that does not improve when
+the agent gets better. Hand a fully-equipped Claude Code session a one-line goal
+and it will sprawl across files you did not ask it to touch, announce completion
+without running anything, lose the thread when context fills, and leave several
+things half-built. A stronger model does all of that faster. The failure is in the
+shape of the work handed over, not in the agent — which is why it belongs after
+the capability topics and before anything that builds a larger system on top.
 
 ## What the reader will be able to do
 
-> The capability the tutorial delivers, as a short list of actions the reader can
-> take afterwards that they could not take before. Not topics covered — things
-> done.
->
-> This is the promise `04-conclusion` has to keep, and the standard the panel
-> holds the whole tutorial to. Vague entries here buy vague review, the same way
-> a vague `audience` does.
-
-- (capability)
-- (capability)
+- Rewrite a one-line goal as units of work, each with a stated behavior and a
+  named way to verify it.
+- Apply the checkability test to a proposed unit, and recognize when a unit is
+  too broad to verify or too narrow to be worth tracking separately.
+- Identify which of the four common agent failures they are looking at — sprawl,
+  premature completion, lost context, or half-finished work — and name the
+  decomposition weakness behind it.
+- Decide when decomposition overhead is not worth paying.
 
 ## Scope
 
-> What the tutorial covers and, explicitly, what it does not. Adjacent topics a
-> reader might expect and will not get belong here with one clause of reason —
-> naming them stops a reviewer reporting them as gaps and stops the team drifting
-> back into them.
-
 **In scope**
 
-- (in)
+- The checkability test, and what it rejects.
+- The four recognizable failure modes, framed from the audience's own Claude Code
+  experience rather than from reported statistics.
+- One worked example carried end to end: a single goal handed over twice, direct
+  and plan-first, with the verification step run live on both results.
+- The honest cost: what decomposition takes from you up front.
 
 **Out of scope**
 
-- (out, and why)
+- Classical AI planning (STRIPS, PDDL, hierarchical task networks) — a real and
+  adjacent field, but it answers how a *machine* searches for a plan, where this
+  tutorial is about how a *person* hands work over.
+- Multi-agent orchestration and graph-shaped workflows — the natural next topic,
+  and too large to share a ten-minute slot with this one.
+- Prompt engineering for individual steps — concerns the wording inside a unit,
+  not the boundary between units.
+- Benchmark numbers for any of the claims. The failure modes are presented as
+  things the audience has already seen, because they have.
 
 ## Shape
 
-> How the four sections divide the material, if you already know. Which one
-> carries the weight, what the worked example in `03-content` will be, whether
-> the arc needs changing for this subject.
->
-> Leave it thin on the first pass. It is here so the reason for a structural
-> choice is written down before the rounds start arguing about it.
+- Ten minutes total: roughly five of talk, five of demo.
+- `01-context` places the topic after ReAct, hardware, and MCP, and defines it.
+- `02-motivation` carries the four failures and the single diagnosis behind them.
+  This is the part the audience should recognize from their own sessions.
+- `03-content` holds the checkability test, the worked example, and the cost.
+- `04-conclusion` states what the reader can now do and what is left open.
+- The demo is the worked example from `03-content`, run for real: **two live
+  Claude Code sessions**, given the same audience-chosen marketing brief, one told
+  to build directly and one told to plan first. Both results are inspected against
+  the same observable requirements in front of the room.
 
-- (note)
+## Settled since the proposal
+
+- **The demo is one live session, not a comparison.** Two earlier designs were
+  built and rejected. A dashboard with a planted defect taught the defect rather
+  than the method. A vague-versus-specific race produced two working pages and no
+  measurable difference, because the specification handed to both *was* the
+  decomposition — the work had already been done by a person before either
+  session started. Nothing in either design showed a unit, a check, or a plan
+  being worked through, which is the topic.
+- **What the demo shows now:** a request, a harness that says plan first, and a
+  session that writes the decomposition and its checks before building anything,
+  stops for review, then works the list one unit at a time with real check output
+  recorded under each ticked box.
+- **The example is a fictional student club page.** Chosen because the audience
+  can judge the result without reading code, and because the signup form carries
+  a real conditional — members without a dog must still be able to join.
+- **The deck is nine designed slides**, authored in PowerPoint from
+  `presentation/source/POWERPOINT-BRIEF.md`, not generated one slide per heading.
 
 ## Open questions
 
-> What the team has not settled: an unresolved framing, an example you are not
-> sure earns its place, a claim you cannot yet support.
->
-> Naming these is cheap now and expensive in review. The panel reads them and
-> will not report a known unknown as a discovery.
-
-- (question)
+- Whether the three failure families are the right three, or whether continuity is
+  a consequence of the other two rather than a peer.
+- How much of the method survives a real codebase. The demo builds one file from
+  nothing, which is the case where boundary and continuity failures cannot occur.
+- Whether a session that writes its own checks will reliably write honest ones,
+  or whether the review step has to catch a weak check sooner or later.

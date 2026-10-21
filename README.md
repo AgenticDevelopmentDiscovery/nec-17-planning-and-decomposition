@@ -20,6 +20,8 @@ sections/           the source — one pair of files per section
 personas/           the reviewer panel, plus the aggregator
 rounds/             committed critique history: one folder per round
 site/               the website's template and stylesheet
+presentation/       the deck; its spec and figure sources live in source/
+demo/               the live two-terminal comparison: brief, prompts, tooling
 figures/            figures, referenced from the prose
 topic.md            the proposal — what this tutorial is and promises
 metadata.yaml       title, authors, and the declared audience
@@ -29,10 +31,13 @@ justfile            every build recipe
 | | Command | Output |
 | --- | --- | --- |
 | Document | `just doc` | `output/document.pdf` |
-| Presentation | `just slides` | `output/slides.pdf` |
 | Website | `just site` | `_site/index.html` |
+| Presentation | authored in PowerPoint | `presentation/Planning-and-Task-Decomposition.pptx` |
 
-`just build` makes all three. `just serve` previews the site locally.
+`just build` makes the document and the website. `just serve` previews the site
+locally. The presentation is **not** generated: a five-minute talk needs a
+designed deck, not one slide per heading. The deck is the `.pptx`; the spec and
+figure sources it was built from are kept in `presentation/source/`.
 
 ## Setup
 

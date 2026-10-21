@@ -23,8 +23,12 @@ common := "--metadata-file=metadata.yaml --resource-path=.:figures --citeproc --
 default:
     @just --list
 
-# Build all three outputs.
-build: doc slides site
+# The presentation is NOT generated here. A five-minute talk needs a designed
+# deck, not one slide per `##` heading, so it is authored in PowerPoint from
+# `presentation/source/POWERPOINT-BRIEF.md`.
+
+# Build the document and the website.
+build: doc site
 
 # --- Document ---------------------------------------------------------------
 
@@ -39,29 +43,18 @@ doc:
 
 # --- Presentation -----------------------------------------------------------
 
-# output/slides.pdf — every `##` heading becomes one slide.
-slides:
-    mkdir -p {{outdir}}
-    {{pandoc}} sections/*.prose.md {{common}} \
-        --pdf-engine={{engine}} \
-        -t beamer --slide-level=2 \
-        -o {{outdir}}/slides.pdf
-
-# Overflowing slides are not a build problem to work around. They are the
-# clearest signal you have that a `##` unit is carrying more than one idea, and
-# the `visual` reviewer is briefed to report them as writing findings. Fix the
-# prose, not the font size.
-#
-# Nothing here checks for you: pandoc hides the TeX log unless the build fails.
-# Look at the deck, or ask the agent to.
+# The deck is hand-authored from `presentation/source/POWERPOINT-BRIEF.md`, which holds
+# the slide copy, figures, presenter script and timings. There is no generated
+# slides.pdf: the former beamer deck put one slide per `##` heading, which gave
+# 16 near-identical text slides for a five-minute slot.
 
 # --- Website ----------------------------------------------------------------
 
-# The page links to both PDFs, so this depends on them; without that, a local
-# preview has two dead links that only show up after deploying.
+# The page links to the document PDF, so this depends on it; without that, a
+# local preview has a dead link that only shows up after deploying.
 
-# _site/ — one page, sidebar table of contents, both PDFs linked.
-site: doc slides
+# _site/ — one page, sidebar table of contents, the document PDF linked.
+site: doc
     mkdir -p {{site}}
     {{pandoc}} sections/*.prose.md {{common}} \
         --standalone --toc --toc-depth=2 \
@@ -69,7 +62,7 @@ site: doc slides
         --css=style.css \
         -o {{site}}/index.html
     cp site/style.css {{site}}/
-    cp {{outdir}}/document.pdf {{outdir}}/slides.pdf {{site}}/
+    cp {{outdir}}/document.pdf {{site}}/
     mkdir -p {{site}}/figures
     cp -R figures/. {{site}}/figures/
     rm -f {{site}}/figures/README.md
@@ -84,9 +77,14 @@ serve: site
 view-doc: doc
     {{open}} {{outdir}}/document.pdf
 
-# Open the presentation PDF.
-view-slides: slides
-    {{open}} {{outdir}}/slides.pdf
+# --- Demo -------------------------------------------------------------------
+
+# Archives whatever was in run/, then leaves it holding only the harness
+# CLAUDE.md: the session writes the plan, the checks and the page itself.
+
+# Reset the live demo folder.
+demo-reset:
+    ./demo/tools/setup.sh
 
 # --- Publishing -------------------------------------------------------------
 
